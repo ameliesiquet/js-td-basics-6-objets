@@ -21,7 +21,46 @@ Implémente un calculateur de pourboire en utilisant les objets et les boucles.
     2°) un tableau qui contient les montants finaux payés (facture + pourboire).
 AIDE : Commence avec deux tableaux vides en tant que propriétés
         et remplis-les dans la boucle
+*/
+//1
+const john = {
+    factures: [124, 48, 268, 180, 42],
+    pourboires: [],
+    montantsFinaux: []
+};
 
+//2
+john.calculerPourboire = function() {
+    this.pourboires = [];
+    this.montantsFinaux = [];
+
+    for (let i = 0; i < this.factures.length; i++) {
+        let pourcentage;
+        const facture = this.factures[i];
+
+        if (facture < 50) {
+            pourcentage = 0.2;
+        } else if (facture >= 50 && facture <= 200) {
+            pourcentage = 0.15;
+        } else {
+            pourcentage = 0.1;
+        }
+
+        const pourboire = Math.floor(facture * pourcentage);
+        this.pourboires.push(pourboire);
+        this.montantsFinaux.push(facture + pourboire);
+    }
+};
+
+john.calculerPourboire();
+
+console.log("Factures de John : " + john.factures);
+console.log("Pourboires de John : " + john.pourboires);
+console.log("Montants finaux payés par John : " + john.montantsFinaux);
+
+
+
+/*
 BONUS (EXTRA) APRÈS AVOIR FINI :
 
 La famille de Mark est aussi partie en vacances, et est allée dans 4 restaurants différents.
@@ -40,3 +79,43 @@ du tableau (c'est comme cela qu'on calcule une moyenne).
 
 BONNE CHANCE 😀
 */
+const mark = {
+    factures: [77, 375, 110, 45],
+    pourboires: [],
+    montantsFinaux: [],
+
+    calculerPourboire: function() {
+    }
+};
+
+function calculerMoyenne(pourboires) {
+    let somme = 0;
+
+    for (let i = 0; i < pourboires.length; i++) {
+        somme += pourboires[i];
+    }
+
+    return somme / pourboires.length;
+}
+function comparaisonPourboiresMoyens(john, mark) {
+    const moyenneJohn = calculerMoyenne(john.pourboires);
+    const moyenneMark = calculerMoyenne(mark.pourboires);
+
+    if (moyenneJohn > moyenneMark) {
+        console.log("John a payé un pourboire plus élevé en moyenne.");
+    } else if (moyenneMark > moyenneJohn) {
+        console.log("Mark a payé un pourboire plus élevé en moyenne.");
+    } else {
+        console.log("Les deux familles ont payé le même pourboire en moyenne.");
+    }
+}
+
+
+
+mark.calculerPourboire();
+
+console.log("Factures de Mark : " + mark.factures);
+console.log("Pourboires de Mark : " + mark.pourboires);
+console.log("Montants finaux payés par Mark : " + mark.montantsFinaux);
+
+comparaisonPourboiresMoyens(john, mark);
